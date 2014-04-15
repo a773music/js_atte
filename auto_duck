@@ -32,19 +32,6 @@ my_beat_position < release_start ? (
 amp = min(amp,1);
 amp = max(0,amp);
 
-/*
-//last_amp = amp;
-amp = my_beat_position - floor(my_beat_position);
-amp < last_amp ? (
-  amp = last_amp - per_sample_step_down;
-): (
-  amp = amp + per_sample_step_up;
-  last_amp = amp;
-);
-*/
 spl0 = (spl0 * amp * slider1 * slider5) + (spl0 * (1-slider1));
 spl1 = (spl1 * amp * slider1 * slider5) + (spl1 * (1-slider1));
-
-//spl0 = spl0 * amp;
-//spl1 = spl1 * amp;
 
