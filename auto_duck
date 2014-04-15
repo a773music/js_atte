@@ -1,0 +1,50 @@
+desc: Atte's auto ducker
+
+slider1:1<0,1,0.01>Depth
+slider2:0.05<-1,1,0.01>Shift (beats)
+slider3:0.01<0.01,1000,0.01>Attack (ms)
+slider4:0.5<0.01,.9,0.01>Release (fraction of beat)
+slider5:1<1,2,0.01>Gain makeup
+
+@slider
+attack_start = 0;
+release_start = (slider3 * tempo) / 60.0;
+release_end = release_start + slider4;
+
+per_sample_step_down = tempo / (release_start * 60.0 * srate);
+per_sample_step_up = tempo / (slider4 * 60.0 * srate);
+
+
+@sample
+my_beat_position = beat_position + 1 + slider2;
+my_beat_position = my_beat_position - floor(my_beat_position);
+
+my_beat_position < release_start ? (
+  amp = amp - per_sample_step_down;
+) : (
+  my_beat_position < release_end ? (
+  amp = amp + per_sample_step_up;
+  ) : (
+  amp = 1;
+  )
+);
+
+amp = min(amp,1);
+amp = max(0,amp);
+
+/*
+//last_amp = amp;
+amp = my_beat_position - floor(my_beat_position);
+amp < last_amp ? (
+  amp = last_amp - per_sample_step_down;
+): (
+  amp = amp + per_sample_step_up;
+  last_amp = amp;
+);
+*/
+spl0 = (spl0 * amp * slider1 * slider5) + (spl0 * (1-slider1));
+spl1 = (spl1 * amp * slider1 * slider5) + (spl1 * (1-slider1));
+
+//spl0 = spl0 * amp;
+//spl1 = spl1 * amp;
+

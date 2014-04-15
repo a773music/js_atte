@@ -1,0 +1,6 @@
+desc: Atte's gainer
+slider1:1<0,3,0.001>Gain
+
+@sample
+spl0 = spl0 * slider1;
+spl1 = spl1 * slider1;

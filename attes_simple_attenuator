@@ -1,0 +1,7 @@
+desc: Atte's simple attenuator
+slider1:1<0,1,0.001>Aplitude
+slider2:1<0,1,0.001>Dry/Wet
+
+@sample
+spl0 = (spl0 * slider1 * slider2) + (spl0 * (1-slider2));
+spl1 = (spl1 * slider1 * slider2) + (spl1 * (1-slider2));
